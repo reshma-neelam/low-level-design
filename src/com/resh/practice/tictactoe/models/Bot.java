@@ -15,10 +15,10 @@ public class Bot extends Player{
     }
 
     @Override
-    public Move makeMove() {
-
-
-        return super.makeMove();
+    public Move makeMove(Board board) {
+        Move move =  botPlayingStrategy.makeMoveForBot(board);
+        move.setPlayer(this);
+        return move;
     }
 
     public BotDifficultyLevel getDifficultyLevel() {

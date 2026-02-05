@@ -8,12 +8,12 @@ public class EasyBotPlayingStrategy implements BotPlayingStrategy {
 
 
     @Override
-    public Move makeMove(Board board, Bot bot) {
+    public Move makeMoveForBot(Board board) {
 
         for(List<Cell> row : board.getBoard()) {
             for(Cell cell : row) {
                 if(cell.getCellState()== CellState.EMPTY) {
-                    return new Move(cell, bot);
+                    return new Move(cell, null, board);
                 }
             }
         }

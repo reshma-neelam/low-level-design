@@ -20,7 +20,7 @@ public class Cell {
         else{
             //if cell state is filled, player object should not be null - intentional no null check
             System.out.print("| " +
-                    + player.getSymbol().getaChar()
+                    String.valueOf(player.getSymbol().getaChar())
                     + " |");
         }
     }

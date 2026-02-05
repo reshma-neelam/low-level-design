@@ -18,15 +18,44 @@ public class Player {
         this.scanner = new Scanner(System.in);
     }
 
-    public Move makeMove(){
+    private boolean isNumberValidForMove(int number, int boardSize) {
+        return number < boardSize;
+    }
+
+    public Move makeMove(Board board){
+
+        Cell cell = getUserMove(board);
+        Move move = new Move(cell, this, board );
+
+       while(!move.validateUserMove()){
+           board.printBoard();
+           cell = getUserMove(board);
+           move = new Move(cell, this, board);
+       }
+
+        return move;
+    }
+
+    private Cell getUserMove(Board board){
         System.out.println("Please enter row and column number where you want to make the Move. (Starting from 0) ");
 
         System.out.println("Please enter the row number: ");
         int row = scanner.nextInt();
+
+        while (!isNumberValidForMove(row, board.getSize())) {
+            System.out.println("Invalid row! Please enter a valid row number according to Board size: ");
+            row = scanner.nextInt();
+        }
+
         System.out.println("Please enter the column number: ");
         int column = scanner.nextInt();
 
-        return new Move(new Cell(row, column), this);
+        while (!isNumberValidForMove(column, board.getSize())) {
+            System.out.println("Invalid column! Please enter a valid column number according to Board size:");
+            column = scanner.nextInt();
+        }
+
+        return new Cell(row, column);
     }
 
     public String getName() {

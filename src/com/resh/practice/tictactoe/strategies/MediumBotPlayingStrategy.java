@@ -6,7 +6,7 @@ import com.resh.practice.tictactoe.models.Move;
 
 public class MediumBotPlayingStrategy implements BotPlayingStrategy {
     @Override
-    public Move makeMove(Board board, Bot bot) {
+    public Move makeMoveForBot(Board boards) {
         return null;
     }
 }

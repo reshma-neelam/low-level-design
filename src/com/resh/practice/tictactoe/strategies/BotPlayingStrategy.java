@@ -6,6 +6,6 @@ import com.resh.practice.tictactoe.models.Move;
 
 public interface BotPlayingStrategy {
 
-    public Move makeMove(Board board, Bot bot);
+    public Move makeMoveForBot(Board board);
 
 }

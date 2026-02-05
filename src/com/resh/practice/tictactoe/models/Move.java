@@ -1,21 +1,30 @@
 package com.resh.practice.tictactoe.models;
 
-import com.resh.practice.tictactoe.exceptions.InvalidMoveException;
+import java.util.List;
 
 public class Move {
 
     private Cell cell;
     private Player player;
+    private Board  board;
 
-    public Move(Cell cell, Player player) {
+    public Move(Cell cell, Player player,  Board board) {
         this.cell = cell;
         this.player = player;
+        this.board = board;
     }
 
-    public void validateUserMove() throws InvalidMoveException {
-        if(cell.getCellState()== CellState.FILLED)
-            throw new InvalidMoveException("Selected Cell is already filled. Select an empty cell.");
+    public boolean validateUserMove(){
+
+        if(board.getBoard().get(cell.getRow()).get(cell.getCol()).getCellState() == CellState.FILLED){
+            System.out.println("Selected Cell is already filled. Select an empty cell.");
+            return false;
+        }
+
+        return true;
     }
+
+
 
     public Cell getCell() {
         return cell;

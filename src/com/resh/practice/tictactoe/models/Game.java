@@ -139,25 +139,65 @@ public class Game {
         this.gameState = gameState;
     }
 
-    public int getNextPlayerIndex() {
-        return nextPlayerIndex;
-    }
-
     public void printBoard() {
         board.printBoard();
     }
 
+
+    public void concludeGame(){
+        if(gameState == GameState.CONCLUDED){
+            System.out.println("Player " + winner.getName() + " won!");
+        } else if (gameState == GameState.DRAW) {
+            System.out.println("Draw! Nobody won this round!");
+        }
+        System.out.println("Game has ended.");
+    }
+
     public void makeMove(){
+
+        // 1. Specify which player's turn it is and show their symbol
         Player currentPlayer = players.get(nextPlayerIndex);
         System.out.println("It is " + currentPlayer.getName() + "'s turn. Your Symbol is " + currentPlayer.getSymbol().getaChar());
 
-        Move move = currentPlayer.makeMove();
-        move.validateUserMove();
-        board.makeMove(move);
+        // 2. Get Move from user and validate
+        Move move = currentPlayer.makeMove(board);
 
-        //set nextplayer index logic
-        //nextPlayerIndex++;
+        //3. Make the move on the board
+        Move actualMove = board.makeMove(move);
 
+        // 4. store the last move made
+        moves.add(actualMove);
+
+        // 5. Update nextplayer index
+        // cyclic moving of index within size of players ex: players 2 so indexes 0 1 0 1 0 1 and so on..
+        nextPlayerIndex += 1;
+        nextPlayerIndex %= players.size();
+
+        // 6. check if last player who made move won
+        evaluateGame(actualMove);
+
+    }
+
+    private void evaluateGame(Move move){
+        if(checkIfWon(move)) {
+            gameState = GameState.CONCLUDED;
+            winner= move.getPlayer();
+        }
+
+        // if number of moves is N*N, this tells us Board is fully filled - no need to check board
+        if(moves.size() == (board.getSize() * board.getSize())){
+            gameState = GameState.DRAW;
+        }
+    }
+
+    public boolean checkIfWon(Move move){
+
+        for(WinningStrategy winningStrategy : winningStrategies){
+            if(winningStrategy.checkIfWon(board, move))
+                return true;
+        }
+
+        return false;
 
     }
 

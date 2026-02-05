@@ -44,13 +44,15 @@ public class Main {
             // 1. printBoard
             gameController.printBoard(game);
 
-            // 2. Specify which Player's turn
-            //gameController.getNextPlayer();
+            // 2. Specify which Player's turn and ask to make move. BOT players will do auto-move
+            gameController.makeMove(game);
 
-            // 3. Ask to make move
-            //gameController.makeMove(game);
+
+
         }
 
+        // print game ended once game state is out of in-progress
+        gameController.concludeGame(game);
 
 
 

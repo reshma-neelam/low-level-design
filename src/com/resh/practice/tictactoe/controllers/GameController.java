@@ -32,8 +32,9 @@ public class GameController {
     void getWinner(Game game){
     }
 
-    void checkIfWon(Game game){
 
+    public void concludeGame(Game game){
+        game.concludeGame();
     }
 
 

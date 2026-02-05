@@ -30,7 +30,7 @@ public class Board {
         }
     }
 
-    public void  makeMove(Move move){
+    public Move  makeMove(Move move){
 
         int moveRow = move.getCell().getRow();
         int moveCol = move.getCell().getCol();
@@ -39,6 +39,11 @@ public class Board {
 
         cellToMove.setCellState(CellState.FILLED);
         cellToMove.setPlayer(move.getPlayer());
+
+        System.out.println("Move made at [ " + moveRow + " , " + moveCol + " ] by player: " + cellToMove.getPlayer().getName());
+        //store the move
+        return new Move(cellToMove,move.getPlayer(), this);
+
 
     }
 
