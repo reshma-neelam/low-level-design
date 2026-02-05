@@ -11,7 +11,18 @@ public class Cell {
         this.row = row;
         this.col = col;
         this.cellState = CellState.EMPTY;
-        //this.player = player;
+        this.player = null;
+    }
+
+    public void printCell(){
+        if (cellState == CellState.EMPTY)
+            System.out.print("|   |");
+        else{
+            //if cell state is filled, player object should not be null - intentional no null check
+            System.out.print("| " +
+                    + player.getSymbol().getaChar()
+                    + " |");
+        }
     }
 
     public int getRow() {

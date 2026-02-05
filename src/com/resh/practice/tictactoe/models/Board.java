@@ -20,6 +20,28 @@ public class Board {
         }
     }
 
+    public void printBoard() {
+
+        for(List<Cell> row : board) {
+            for(Cell cell : row) {
+                cell.printCell();
+            }
+            System.out.println();
+        }
+    }
+
+    public void  makeMove(Move move){
+
+        int moveRow = move.getCell().getRow();
+        int moveCol = move.getCell().getCol();
+
+        Cell cellToMove = board.get(moveRow).get(moveCol);
+
+        cellToMove.setCellState(CellState.FILLED);
+        cellToMove.setPlayer(move.getPlayer());
+
+    }
+
     public List<List<Cell>> getBoard() {
         return board;
     }

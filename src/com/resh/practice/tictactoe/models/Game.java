@@ -1,6 +1,7 @@
 package com.resh.practice.tictactoe.models;
 
 import com.resh.practice.tictactoe.exceptions.DuplicatePlayerSymbol;
+import com.resh.practice.tictactoe.exceptions.InvalidMoveException;
 import com.resh.practice.tictactoe.exceptions.InvalidNumberOfPlayers;
 import com.resh.practice.tictactoe.exceptions.MoreThanOneBotPlayer;
 import com.resh.practice.tictactoe.strategies.WinningStrategy;
@@ -142,13 +143,22 @@ public class Game {
         return nextPlayerIndex;
     }
 
-    public void printBoard(){
-        for(int i=0; i< this.board.getSize(); i++){
-            for(int j=0; j< this.board.getSize(); j++){
-                System.out.print("|   |");
-            }
-            System.out.println();
-        }
+    public void printBoard() {
+        board.printBoard();
+    }
+
+    public void makeMove(){
+        Player currentPlayer = players.get(nextPlayerIndex);
+        System.out.println("It is " + currentPlayer.getName() + "'s turn. Your Symbol is " + currentPlayer.getSymbol().getaChar());
+
+        Move move = currentPlayer.makeMove();
+        move.validateUserMove();
+        board.makeMove(move);
+
+        //set nextplayer index logic
+        //nextPlayerIndex++;
+
+
     }
 
 }

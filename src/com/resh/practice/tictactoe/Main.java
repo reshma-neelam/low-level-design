@@ -48,7 +48,7 @@ public class Main {
             //gameController.getNextPlayer();
 
             // 3. Ask to make move
-            gameController.makeMove(game);
+            //gameController.makeMove(game);
         }
 
 

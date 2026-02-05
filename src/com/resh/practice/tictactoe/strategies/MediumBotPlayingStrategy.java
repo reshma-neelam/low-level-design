@@ -4,8 +4,9 @@ import com.resh.practice.tictactoe.models.Board;
 import com.resh.practice.tictactoe.models.Bot;
 import com.resh.practice.tictactoe.models.Move;
 
-public interface BotPlayingStrategy {
-
-    public Move makeMove(Board board, Bot bot);
-
+public class MediumBotPlayingStrategy implements BotPlayingStrategy {
+    @Override
+    public Move makeMove(Board board, Bot bot) {
+        return null;
+    }
 }
