@@ -4,6 +4,7 @@ package com.resh.practice.tictactoe;
 import com.resh.practice.tictactoe.controllers.GameController;
 import com.resh.practice.tictactoe.models.*;
 import com.resh.practice.tictactoe.strategies.ColumnWinningStrategy;
+import com.resh.practice.tictactoe.strategies.DiagonalWinningStrategy;
 import com.resh.practice.tictactoe.strategies.RowWinningStrategy;
 import com.resh.practice.tictactoe.strategies.WinningStrategy;
 
@@ -16,10 +17,11 @@ public class Main {
         GameController gameController = new GameController();
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Lets Play Tic Tac Toe!");
         System.out.println("Enter the dimension of the Board:");
         int dimensionOfBoard = scanner.nextInt();
 
-        System.out.println("Enter the number of players:");
+        System.out.println("Enter the number of human players:");
         int numberOfPlayers = scanner.nextInt();
 
         List<Player> players = new ArrayList<>();
@@ -28,11 +30,14 @@ public class Main {
         System.out.println("Enter the player Name:");
         String playerName = scanner.next();
 
+        //default two players added.
         players.add(new Player(playerName, 1, PlayerType.HUMAN, new Symbol('X')));
         players.add(new Bot(2, new Symbol('O'), BotDifficultyLevel.EASY));
 
+        //default all 3 strategies added. Can be taken as input from user
         winningStrategies.add(new RowWinningStrategy());
         winningStrategies.add(new ColumnWinningStrategy());
+        winningStrategies.add(new DiagonalWinningStrategy());
 
         Game game = gameController.startGame(dimensionOfBoard, players, winningStrategies);
 

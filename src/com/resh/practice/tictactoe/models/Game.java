@@ -145,6 +145,7 @@ public class Game {
 
 
     public void concludeGame(){
+        printBoard();
         if(gameState == GameState.CONCLUDED){
             System.out.println("Player " + winner.getName() + " won!");
         } else if (gameState == GameState.DRAW) {
@@ -167,6 +168,7 @@ public class Game {
 
         // 4. store the last move made
         moves.add(actualMove);
+        updateStrategyMaps(actualMove);
 
         // 5. Update nextplayer index
         // cyclic moving of index within size of players ex: players 2 so indexes 0 1 0 1 0 1 and so on..
@@ -176,6 +178,12 @@ public class Game {
         // 6. check if last player who made move won
         evaluateGame(actualMove);
 
+    }
+
+    private void updateStrategyMaps(Move move){
+        for(WinningStrategy winningStrategy : winningStrategies){
+            winningStrategy.updateStrategyMap(move);
+        }
     }
 
     private void evaluateGame(Move move){
