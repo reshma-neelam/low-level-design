@@ -2,6 +2,7 @@ package com.resh.practice.tictactoe.controllers;
 
 import com.resh.practice.tictactoe.models.Game;
 import com.resh.practice.tictactoe.models.GameState;
+import com.resh.practice.tictactoe.models.Move;
 import com.resh.practice.tictactoe.models.Player;
 import com.resh.practice.tictactoe.strategies.WinningStrategy;
 
@@ -9,12 +10,17 @@ import java.util.List;
 
 public class GameController {
 
-    public Game startGame(int dimension, List<Player> players, List<WinningStrategy> winningStrategies) {
+    public Game createGame(int dimension, List<Player> players, List<WinningStrategy> winningStrategies, boolean enableUndo) {
         return Game.createBuilder()
                 .setDimension(dimension)
                 .setPlayers(players)
                 .setWinningStrategies(winningStrategies)
+                .setEnableUndo(enableUndo)
                 .build();
+    }
+
+    public void startGame(Game game) {
+        game.startGame();
     }
 
     public void makeMove(Game game){
@@ -29,9 +35,13 @@ public class GameController {
         game.printBoard();
     }
 
-    void getWinner(Game game){
+    public void undoLastMove(Game game){
+       game.undoLastMove();
     }
 
+    public void evaluateGame(Game game){
+        game.evaluateGame();
+    }
 
     public void concludeGame(Game game){
         game.concludeGame();

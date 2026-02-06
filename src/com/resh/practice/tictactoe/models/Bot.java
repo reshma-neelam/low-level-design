@@ -16,6 +16,7 @@ public class Bot extends Player{
 
     @Override
     public Move makeMove(Board board) {
+        System.out.println("It is " + this.getName() + "'s turn. Your Symbol is " + this.getSymbol().getaChar());
         Move move =  botPlayingStrategy.makeMoveForBot(board);
         move.setPlayer(this);
         return move;

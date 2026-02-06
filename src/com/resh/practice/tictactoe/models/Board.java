@@ -41,9 +41,20 @@ public class Board {
         cellToMove.setPlayer(move.getPlayer());
 
         System.out.println("Move made at [ " + moveRow + " , " + moveCol + " ] by player: " + cellToMove.getPlayer().getName());
-        //store the move
         return new Move(cellToMove,move.getPlayer(), this);
 
+
+    }
+
+    public void undoMove(Move move){
+        int moveRow = move.getCell().getRow();
+        int moveCol = move.getCell().getCol();
+
+        Cell cellToUndo = board.get(moveRow).get(moveCol);
+        cellToUndo.setCellState(CellState.EMPTY);
+        cellToUndo.setPlayer(null);
+
+        System.out.println("Last move is reverted.");
 
     }
 

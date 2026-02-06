@@ -50,6 +50,15 @@ public class RowWinningStrategy implements WinningStrategy {
         rowSymbolCount.get(row).put(symbol, rowSymbolCount.get(row).get(symbol) + 1);
     }
 
+    @Override
+    public void handleUndoMove(Move move) {
+        int row = move.getCell().getRow();
+        Symbol symbol = move.getPlayer().getSymbol();
+
+        rowSymbolCount.get(row).put(symbol, rowSymbolCount.get(row).get(symbol) - 1);
+
+    }
+
     public Map<Integer, Map<Symbol, Integer>> getRowSymbolCount() {
         return rowSymbolCount;
     }

@@ -17,6 +17,7 @@ public class Move {
     public boolean validateUserMove(){
 
         if(board.getBoard().get(cell.getRow()).get(cell.getCol()).getCellState() == CellState.FILLED){
+            board.printBoard();
             System.out.println("Selected Cell is already filled. Select an empty cell.");
             return false;
         }

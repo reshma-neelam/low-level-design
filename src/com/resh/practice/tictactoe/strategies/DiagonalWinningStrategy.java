@@ -41,6 +41,13 @@ public class DiagonalWinningStrategy implements WinningStrategy {
         map.put(symbol, map.get(symbol) + 1);
     }
 
+    private void removeFromMap(Map<Symbol,Integer> map, Symbol symbol) {
+        if(map.containsKey(symbol)) {
+            map.put(symbol, map.get(symbol) - 1);
+        }
+
+    }
+
     @Override
     public void updateStrategyMap(Move move) {
 
@@ -60,6 +67,24 @@ public class DiagonalWinningStrategy implements WinningStrategy {
 
             //NOTE: for center cell, both ifs will be true hence it will be updated in both maps
 
+
+    }
+
+    @Override
+    public void handleUndoMove(Move move) {
+        int row = move.getCell().getRow();
+        int col = move.getCell().getCol();
+        Symbol symbol = move.getPlayer().getSymbol();
+
+        // primary diagonal
+        if(row == col ){
+            removeFromMap(diagSymbolCount, symbol);
+        }
+
+        //secondary diagonal
+        if(row + col == move.getBoard().getSize()-1) {
+            removeFromMap(antiDiagSymbolCount, symbol);
+        }
 
     }
 }

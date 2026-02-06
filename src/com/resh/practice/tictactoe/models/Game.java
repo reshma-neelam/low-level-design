@@ -6,10 +6,7 @@ import com.resh.practice.tictactoe.exceptions.InvalidNumberOfPlayers;
 import com.resh.practice.tictactoe.exceptions.MoreThanOneBotPlayer;
 import com.resh.practice.tictactoe.strategies.WinningStrategy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Game {
 
@@ -20,14 +17,16 @@ public class Game {
     private GameState gameState;
     private int nextPlayerIndex;
     private List<WinningStrategy> winningStrategies;
+    private boolean enableUndo;
 
-    private Game (int dimension, List<Player> players, List<WinningStrategy> winningStrategies) {
+    private Game (int dimension, List<Player> players, List<WinningStrategy> winningStrategies, boolean enableUndo) {
         this.players = players;
         this.board = new Board(dimension);
         this.moves = new ArrayList<>();
         this.winningStrategies = winningStrategies;
         this.gameState = GameState.READY;
         this.nextPlayerIndex = 0;
+        this.enableUndo = enableUndo;
 
     }
 
@@ -43,11 +42,13 @@ public class Game {
         private List<Player> players;
 
         private List<WinningStrategy> winningStrategies;
+        private boolean enableUndo;
 
         private Builder() {
             this.dimension = 0;
             this.players = new ArrayList<>();
             this.winningStrategies = new ArrayList<>();
+            this.enableUndo = false;
         }
 
         public Builder setDimension(int dimension) {
@@ -55,7 +56,13 @@ public class Game {
             return this;
         }
 
-        public Builder setWinningStrategies(List<WinningStrategy> winningStrategies) {
+        public Builder setEnableUndo(boolean enableUndo) {
+            this.enableUndo = enableUndo;
+            return this;
+        }
+
+
+            public Builder setWinningStrategies(List<WinningStrategy> winningStrategies) {
             this.winningStrategies = winningStrategies;
             return this;
         }
@@ -111,7 +118,7 @@ public class Game {
                 symbolCounts.put(player.getSymbol().getaChar(), symbolCounts.get(player.getSymbol().getaChar()) + 1);
 
                 if(symbolCounts.get(player.getSymbol().getaChar()) > 1){
-                    throw new DuplicatePlayerSymbol("Duplicate Symbols used by Players. Select unique symbols");
+                    throw new DuplicatePlayerSymbol("Duplicate Symbols used by Players. Select unique symbols. Symbol 'O' is used by BOT player");
                 }
             }
 
@@ -126,7 +133,7 @@ public class Game {
 
         public Game build(){
             validate();
-            return new Game(dimension, players, winningStrategies);
+            return new Game(dimension, players, winningStrategies, enableUndo);
 
         }
     }
@@ -135,14 +142,17 @@ public class Game {
         return gameState;
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
     public void printBoard() {
         board.printBoard();
     }
 
+    public void startGame(){
+        this.gameState = GameState.IN_PROGRESS;
+    }
+
+    public boolean isEnableUndo() {
+        return enableUndo;
+    }
 
     public void concludeGame(){
         printBoard();
@@ -158,7 +168,7 @@ public class Game {
 
         // 1. Specify which player's turn it is and show their symbol
         Player currentPlayer = players.get(nextPlayerIndex);
-        System.out.println("It is " + currentPlayer.getName() + "'s turn. Your Symbol is " + currentPlayer.getSymbol().getaChar());
+
 
         // 2. Get Move from user and validate
         Move move = currentPlayer.makeMove(board);
@@ -175,9 +185,6 @@ public class Game {
         nextPlayerIndex += 1;
         nextPlayerIndex %= players.size();
 
-        // 6. check if last player who made move won
-        evaluateGame(actualMove);
-
     }
 
     private void updateStrategyMaps(Move move){
@@ -186,10 +193,19 @@ public class Game {
         }
     }
 
-    private void evaluateGame(Move move){
-        if(checkIfWon(move)) {
+    private void removeFromStrategyMaps(Move move){
+        for(WinningStrategy winningStrategy : winningStrategies){
+            winningStrategy.handleUndoMove(move);
+        }
+    }
+
+    public void evaluateGame(){
+
+        Move lastMove = moves.getLast();
+        if(checkIfWon(lastMove)) {
             gameState = GameState.CONCLUDED;
-            winner= move.getPlayer();
+            winner= lastMove.getPlayer();
+            return; //bug: if last move on the board wins, don't check the state for DRAW
         }
 
         // if number of moves is N*N, this tells us Board is fully filled - no need to check board
@@ -198,7 +214,7 @@ public class Game {
         }
     }
 
-    public boolean checkIfWon(Move move){
+    private boolean checkIfWon(Move move){
 
         for(WinningStrategy winningStrategy : winningStrategies){
             if(winningStrategy.checkIfWon(board, move))
@@ -208,5 +224,25 @@ public class Game {
         return false;
 
     }
+
+    public void undoLastMove(){
+
+        Move lastMove = moves.getLast();
+
+        // 1. undo from the board
+        board.undoMove(lastMove);
+
+        // 4. remove the last move affects
+        moves.remove(lastMove);
+        removeFromStrategyMaps(lastMove);
+
+        // 5. Update nextplayer index
+        // cyclic moving of index within size of players ex: players 2 so indexes 0 1 0 1 0 1 and so on..
+        nextPlayerIndex -= 1;
+        nextPlayerIndex = (nextPlayerIndex + players.size()) % players.size();
+
+    }
+
+
 
 }

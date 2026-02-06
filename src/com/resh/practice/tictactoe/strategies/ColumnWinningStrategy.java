@@ -40,5 +40,14 @@ public class ColumnWinningStrategy implements WinningStrategy {
         colSymbolCount.get(col).put(symbol, colSymbolCount.get(col).get(symbol) + 1);
     }
 
+    @Override
+    public void handleUndoMove(Move move) {
+        int col = move.getCell().getCol();
+        Symbol symbol = move.getPlayer().getSymbol();
+
+        colSymbolCount.get(col).put(symbol, colSymbolCount.get(col).get(symbol) - 1);
+
+    }
+
 
 }

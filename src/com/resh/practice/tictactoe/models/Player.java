@@ -28,7 +28,6 @@ public class Player {
         Move move = new Move(cell, this, board );
 
        while(!move.validateUserMove()){
-           board.printBoard();
            cell = getUserMove(board);
            move = new Move(cell, this, board);
        }
@@ -37,6 +36,7 @@ public class Player {
     }
 
     private Cell getUserMove(Board board){
+        System.out.println("It is " + this.getName() + "'s turn. Your Symbol is " + this.getSymbol().getaChar());
         System.out.println("Please enter row and column number where you want to make the Move. (Starting from 0) ");
 
         System.out.println("Please enter the row number: ");

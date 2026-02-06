@@ -13,4 +13,5 @@ public interface WinningStrategy {
 
     public void updateStrategyMap(Move move);
 
+    public void handleUndoMove(Move move);
 }
