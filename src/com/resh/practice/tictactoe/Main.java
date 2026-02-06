@@ -70,7 +70,7 @@ public class Main {
             // 1. printBoard
             gameController.printBoard(game);
 
-            // 2. Specify which Player's turn and ask to make move. BOT players will do auto-move
+            // 2. Specify which Player's turn and ask to make move. BOT players will do auto-move based on difficulty level
             gameController.makeMove(game);
 
             //3. If Undo is supported, ask if last move undo needed ?
