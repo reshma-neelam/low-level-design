@@ -25,3 +25,6 @@ Difficulty levels can be selected by user before game start
 ____________________________________________________________________________________________________
 
 Problem Statement 2: Design a Parking Lot
+
+Follows MVC folder structure for packages
+Code for one requirement of issuing a parking token is completed
