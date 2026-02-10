@@ -1,6 +1,6 @@
 package com.resh.practice.parkinglot.models;
 
-public class Gate {
+public class Gate extends BaseModel{
 
     private String gateNumber;
     private Operator currentOperator;

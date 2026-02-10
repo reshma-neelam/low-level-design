@@ -1,6 +1,6 @@
 package com.resh.practice.parkinglot.models;
 
-public class Vehicle {
+public class Vehicle extends BaseModel {
 
     private VehicleType vehicleType;
     private String vehicleNumber;

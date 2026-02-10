@@ -2,7 +2,7 @@ package com.resh.practice.parkinglot.models;
 
 import java.util.List;
 
-public class ParkingSpot {
+public class ParkingSpot extends BaseModel {
 
     private List<VehicleType> supportedVehicleTypes;
     private int spotNumber;
