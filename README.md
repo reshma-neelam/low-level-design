@@ -1,6 +1,8 @@
 # low-level-design
 practice repo for LLD topics
 
+Problem Statement 1: Design TicTacToe game
+
 Game is implemented to support N board size with N-1 players.
 By default, number of players is two -
 Multiplayer or single player mode can be selected.
@@ -17,3 +19,7 @@ By default, all 3 are added.
 One Easy Bot playing level is implemented and is selected by default.
 Implementation for Medium and Hard playing levels by BOTs can be added and plugged.
 Difficulty levels can be selected by user before game start
+
+____________________________________________________________________________________________________
+
+Problem Statement 1: Design a Parking Lot
