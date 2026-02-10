@@ -1,6 +1,8 @@
 # low-level-design
 practice repo for LLD topics
 
+____________________________________________________________________________________________________
+
 Problem Statement 1: Design TicTacToe game
 
 Game is implemented to support N board size with N-1 players.
@@ -22,4 +24,4 @@ Difficulty levels can be selected by user before game start
 
 ____________________________________________________________________________________________________
 
-Problem Statement 1: Design a Parking Lot
+Problem Statement 2: Design a Parking Lot
