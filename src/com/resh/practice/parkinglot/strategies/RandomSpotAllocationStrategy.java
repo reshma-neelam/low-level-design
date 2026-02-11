@@ -12,6 +12,8 @@ public class RandomSpotAllocationStrategy implements SpotAllocationStrategy{
             for(ParkingSpot spot : parkingFloor.getParkingSpots()){
                 if(spot.getSupportedVehicleTypes().contains(vehicleType) &&
                 spot.getParkingSpotStatus().equals(ParkingSpotStatus.AVAILABLE)){
+                    //make this spot as occupied, since we are allocating this spot now
+                    spot.setParkingSpotStatus(ParkingSpotStatus.OCCUPIED);
                     return spot;
                 }
             }
