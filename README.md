@@ -35,3 +35,5 @@ ________________________________________________________________________________
 
 
 Problem Statement 3: Design a System like BookMyShow
+
+Only Classes and entities design is done in this package
